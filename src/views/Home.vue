@@ -1,51 +1,52 @@
 <template>
   <div id="home" class="container mx-auto">
-    <TodoInput @addTodo="addTodo" />
+    <TodoInput @addTodo="addTodo" v-model="todo" />
     <div v-if="todoList.length >= 1">
-      <TodoItem  v-for="item in todoList" :key="item.id" :todo="item" />
+      <TodoItem
+        @deleteItem="deleteItem"
+        @toggleCompleted="toggleCompleted"
+        v-for="(item, index) in todoList"
+        :key="index"
+        :todo="item"
+        :index="index"
+      />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TodoItem from '../components/TodoItem'
-import TodoInput from '../components/TodoInput'
+import TodoItem from "@/components/TodoItem";
+import TodoInput from "@/components/TodoInput";
 
 export default {
   name: "Home",
-  components : {
+  components: {
     TodoItem,
     TodoInput
   },
   data() {
     return {
-      todoList : [
-        { id : 0, item : 'clean the kitchen'},
-        { id : 1, item : 'Make the bed'},
-        { id : 2, item : 'Feed the cats'},
-        { id : 3, item : 'Iron the clothes'}
-      ]
-    }
+      todoList: JSON.parse(localStorage.getItem("TODO_LIST")) || [],
+      todo: ""
+    };
   },
-  // mounted() {
-  //   if (localStorage.getItem('todos')) {
-  //     this.todoList = JSON.parse(localStorage.getItem('todos'))
-  //   } else {
-  //     this.todoList = []
-  //   }
-  // },
-  methods : {
+  methods: {
     addTodo() {
-      this.preventDefault
-      this.todoList.push({ id : this.todoList.length + 1, item : 'todo item'})
-    }
-  },
-  watch : {
-    updateTodoList(oldList, newList) {
-      if (oldList.length < newList.length) {
-        localStorage.setItem('todos', newList)
-      }
+      this.todoList.push({
+        id: this.todoList.length + 1,
+        item: this.todo,
+        completed: false
+      });
+      localStorage.setItem("TODO_LIST", JSON.stringify(this.todoList));
+      this.todo = "";
+    },
+    deleteItem(index) {
+      this.todoList.splice(index, 1);
+      localStorage.setItem("TODO_LIST", JSON.stringify(this.todoList));
+    },
+    toggleCompleted(index) {
+      this.todoList[index].completed = !this.todoList[index].completed;
     }
   }
 };
