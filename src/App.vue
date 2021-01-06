@@ -1,32 +1,18 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="mx-auto">
+    <div id="nav" class="w-full py-4 border-b text-xl mb-8 flex flex-row items-center">
+      <img alt="Vue logo" src="./assets/logo.png" width="50px" class=""/>
+      <router-link class="mx-2 text-gray-700 hover:text-green-700 ml-auto" to="/">Home</router-link> |
+      <router-link class="mx-2 text-gray-700 hover:text-green-700 mr-auto" to="/about">About</router-link>
     </div>
     <router-view />
   </div>
 </template>
 
-<style>
+<style scoped>
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  max-width: 650px;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
