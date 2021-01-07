@@ -16,10 +16,27 @@
         to="/about"
         >About</router-link
       >
+      <p
+        @click="logout()"
+        v-if="$store.state.isLoggedIn"
+        class="text-sm text-green-500 font-medium cursor-pointer"
+      >
+        Logout
+      </p>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    }
+  }
+};
+</script>
 
 <style scoped>
 #app {
